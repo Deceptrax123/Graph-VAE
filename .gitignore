@@ -10,6 +10,11 @@
 # Icon must end with two \r
 Icon
 
+#Weights
+*.pt
+
+#Loggers
+wandb/
 
 # Thumbnails
 ._*
