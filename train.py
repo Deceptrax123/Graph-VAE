@@ -38,7 +38,7 @@ def test_epoch():
     epoch_loss = 0
 
     for step, graphs in enumerate(test_loader):
-        z = model.encoder(graphs.x_s, edge_index=graphs.edge_index_s)
+        z = model.encode(graphs.x_s, edge_index=graphs.edge_index_s)
 
         loss = model.recon_loss(z, graphs.edge_index_s)+model.kl_loss()
         epoch_loss += loss.item()
