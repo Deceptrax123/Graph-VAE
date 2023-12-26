@@ -18,11 +18,11 @@ def train_epoch():
     epoch_loss = 0
 
     for step, graphs in enumerate(train_loader):
-        z = model.encode(graphs.x_s, edge_index=graphs.edge_index_s)
+        z = model.encode(graphs.x_t, edge_index=graphs.edge_index_t)
 
         model.zero_grad()
-        loss = model.recon_loss(z, graphs.edge_index_s) + \
-            (model.kl_loss()/graphs.x_s.size(0))
+        loss = model.recon_loss(z, graphs.edge_index_t) + \
+            (model.kl_loss()/graphs.x_t.size(0))
 
         loss.backward()
         optimizer.step()
@@ -39,10 +39,10 @@ def test_epoch():
     epoch_loss = 0
 
     for step, graphs in enumerate(test_loader):
-        z = model.encode(graphs.x_s, edge_index=graphs.edge_index_s)
+        z = model.encode(graphs.x_t, edge_index=graphs.edge_index_t)
 
-        loss = model.recon_loss(z, graphs.edge_index_s) + \
-            (model.kl_loss()/graphs.x_s.size(0))
+        loss = model.recon_loss(z, graphs.edge_index_t)
+
         epoch_loss += loss.item()
 
         del graphs
@@ -68,12 +68,12 @@ def training_loop():
 
             wandb.log({
                 "Train Loss": train_loss,
-                "Test Loss": test_loss,
-                "Learning Rate": optimizer.param_groups['lr'][0]
+                "Test Reconstruction Loss": test_loss,
+                "Learning Rate": optimizer.param_groups[0]['lr']
             })
 
             if (epoch+1) % 10 == 0:
-                path = "weights/reactant_1_scheduler/model{epoch}.pth".format(
+                path = "weights/reactant_2_scheduler/model{epoch}.pth".format(
                     epoch=epoch+1)
 
                 torch.save(model.encoder.state_dict(), path)
