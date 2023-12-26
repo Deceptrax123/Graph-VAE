@@ -11,7 +11,7 @@
 Icon
 
 #Weights
-*.pt
+weights/
 
 #Loggers
 wandb/

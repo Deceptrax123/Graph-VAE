@@ -21,7 +21,8 @@ def train_epoch():
         z = model.encode(graphs.x_s, edge_index=graphs.edge_index_s)
 
         model.zero_grad()
-        loss = model.recon_loss(z, graphs.edge_index_s)+model.kl_loss()
+        loss = model.recon_loss(z, graphs.edge_index_s) + \
+            (model.kl_loss()/graphs.x_s.size(0))
 
         loss.backward()
         optimizer.step()
@@ -40,7 +41,8 @@ def test_epoch():
     for step, graphs in enumerate(test_loader):
         z = model.encode(graphs.x_s, edge_index=graphs.edge_index_s)
 
-        loss = model.recon_loss(z, graphs.edge_index_s)+model.kl_loss()
+        loss = model.recon_loss(z, graphs.edge_index_s) + \
+            (model.kl_loss()/graphs.x_s.size(0))
         epoch_loss += loss.item()
 
         del graphs
@@ -66,14 +68,18 @@ def training_loop():
 
             wandb.log({
                 "Train Loss": train_loss,
-                "Test Loss": test_loss
+                "Test Loss": test_loss,
+                "Learning Rate": optimizer.param_groups['lr'][0]
             })
 
             if (epoch+1) % 10 == 0:
-                path = "weights/reactant_1/model{epoch}.pth".format(
+                path = "weights/reactant_1_scheduler/model{epoch}.pth".format(
                     epoch=epoch+1)
 
                 torch.save(model.encoder.state_dict(), path)
+
+        # Update learning rate
+        scheduler.step()
 
 
 if __name__ == '__main__':
@@ -139,6 +145,8 @@ if __name__ == '__main__':
     BETAS = (0.9, 0.999)
 
     optimizer = torch.optim.Adam(params=model.parameters(), lr=LR, betas=BETAS)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
+        optimizer, T_0=10, verbose=True)
 
     train_steps = (len(train_set)+params['batch_size']-1)//params['batch_size']
     test_steps = (len(test_set)+params['batch_size']-1)//params['batch_size']
