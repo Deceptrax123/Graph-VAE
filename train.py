@@ -19,11 +19,11 @@ def train_epoch():
     epoch_loss = 0
 
     for step, graphs in enumerate(train_loader):
-        z = model.encode(graphs.x_t, edge_index=graphs.edge_index_t)
+        z = model.encode(graphs.x_s, edge_index=graphs.edge_index_s)
 
         model.zero_grad()
-        loss = model.recon_loss(z, graphs.edge_index_t) + \
-            (model.kl_loss()/graphs.x_t.size(0))
+        loss = model.recon_loss(z, graphs.edge_index_s) + \
+            (model.kl_loss()/graphs.x_s.size(0))
 
         loss.backward()
         optimizer.step()
@@ -40,9 +40,9 @@ def test_epoch():
     epoch_loss = 0
 
     for step, graphs in enumerate(test_loader):
-        z = model.encode(graphs.x_t, edge_index=graphs.edge_index_t)
+        z = model.encode(graphs.x_s, edge_index=graphs.edge_index_s)
 
-        loss = model.recon_loss(z, graphs.edge_index_t)
+        loss = model.recon_loss(z, graphs.edge_index_s)
 
         epoch_loss += loss.item()
 
