@@ -74,7 +74,7 @@ def training_loop():
             })
 
             if (epoch+1) % 10 == 0:
-                path = "weights/reactant_2/model{epoch}.pth".format(
+                path = "weights/reactant_1/model{epoch}.pth".format(
                     epoch=epoch+1)
 
                 torch.save(model.encoder.state_dict(), path)
