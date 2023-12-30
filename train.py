@@ -4,6 +4,7 @@ from torch_geometric.nn import VGAE
 from dataset import MolecularGraphDataset
 import torch
 from Model.encoder import DrugEncoder
+from Model.spectral_encoder import SpectralDrugEncoder
 from torch.utils.data import ConcatDataset
 import torch.multiprocessing as tmp
 from torch import nn
@@ -73,7 +74,7 @@ def training_loop():
             })
 
             if (epoch+1) % 10 == 0:
-                path = "weights/reactant_2_scheduler/model{epoch}.pth".format(
+                path = "weights/reactant_2/model{epoch}.pth".format(
                     epoch=epoch+1)
 
                 torch.save(model.encoder.state_dict(), path)
@@ -132,7 +133,7 @@ if __name__ == '__main__':
     test_loader = DataLoader(test_set, **params, follow_batch=['x_s', 'x_t'])
 
     # Import Models
-    encoder = DrugEncoder(in_features=train_set[0].x_s.size(1))
+    encoder = SpectralDrugEncoder(in_features=train_set[0].x_s.size(1))
     for m in encoder.modules():
         init_weights(m)
 
