@@ -1,1 +1,1 @@
-This repository contains the code for the graph variational autoencoder used for pretraining the rectants before symptom classification as implemented <a href="https://github.com/Deceptrax123/Graph-VAE">here</a>
+This repository contains the code for the graph variational autoencoder used for pretraining the reactants before symptom classification as implemented <a href="https://github.com/Deceptrax123/Graph-VAE">here</a>
