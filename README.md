@@ -14,13 +14,15 @@ This repository contains the code for the graph variational autoencoder used for
 <table>
   <tbody>
     <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Deceptrax123"><img src="https://avatars.githubusercontent.com/u/87447180?v=4?s=100" width="100px;" alt="Srinitish S"/><br /><sub><b>Srinitish S</b></sub></a><br /><a href="https://github.com/Deceptrax123/Graph-VAE/commits?author=Deceptrax123" title="Code">💻</a> <a href="#research-Deceptrax123" title="Research">🔬</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Varenya007"><img src="https://avatars.githubusercontent.com/u/90688425?v=4?s=100" width="100px;" alt="Varenya"/><br /><sub><b>Varenya</b></sub></a><br /><a href="https://github.com/Deceptrax123/Graph-VAE/commits?author=Varenya007" title="Code">💻</a> <a href="#research-Varenya007" title="Research">🔬</a></td>
-    </tr>
+
+    <tr>
   </tbody>
 </table>
-
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
